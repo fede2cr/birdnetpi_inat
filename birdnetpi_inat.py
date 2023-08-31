@@ -1,8 +1,9 @@
 from Adafruit_IO import MQTTClient
-from pyinaturalist import *
-import secrets
+from PIL import Image
+from pyinaturalist import get_observations
+import requests
 import json
-
+import secrets
 
 FEED_ID="birdnetpi"
 
@@ -28,8 +29,11 @@ def message(client, feed_id, payload):
     """
     print(payload)
     observations = get_observations(taxon_name=payload, photos=True, per_page=1, page=1)
-    print(json.dumps(observations['results'], default=str))
-    
+    url=observations['results'][0]['taxon']['default_photo']['medium_url']
+    response = requests.get(url)
+    open("birdnetpi.jpg", "wb").write(response.content)
+    image = Image.open('birdnetpi.jpg')
+    image.show()
 
 # Create an MQTT client instance.
 client = MQTTClient(secrets.username, secrets.aiokey)
