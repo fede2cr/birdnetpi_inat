@@ -40,11 +40,12 @@ Define in the web config of BirdNet-Pi the notification message as ``%$sciname%`
 
 ### Adafruit-IO -> iNaturalist
 
-```
+```bash
 python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
+Edit the file ``secrets.py`` to define the Adafruit-IO username and key.
 
 
